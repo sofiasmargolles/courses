@@ -1,0 +1,16 @@
+services:
+  vnc:
+    image: consol/ubuntu-xfce-vnc
+    container_name: vnc-server
+    restart: always
+    ports:
+      - "5901:5901"   # Puerto VNC
+      - "6901:6901"   # Puerto noVNC (interfaz web)
+    environment:
+      - VNC_PW=${VNC_PASSWORD}       # Contraseña VNC
+      - RESOLUTION=1280x720             # Resolución de pantalla
+      - ENABLE_PASSWORD=true            # Habilita la autenticación por contraseña
+      - ENABLE_SSL=false                # Deshabilita SSL para noVNC (puedes habilitarlo si lo deseas)
+    volumes:
+      - /dev/shm:/dev/shm               # Utiliza la memoria compartida para mejorar el rendimiento
+

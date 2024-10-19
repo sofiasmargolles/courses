@@ -1,0 +1,13 @@
+version: '3.7'
+
+services:
+  sftp:
+    image: atmoz/sftp
+    container_name: sftp_server
+    restart: no
+    ports:
+      - "22:22"  # El puerto 22 se usa para SFTP
+    environment:
+      SFTP_USERS: "admin:${FTP_PASS}:1001"  # Usuario:Contraseña:UID
+    volumes:
+      - ./sftp_data:/home/admin  # Montar el volumen en el directorio del usuario
