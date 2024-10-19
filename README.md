@@ -44,7 +44,26 @@ De hecho también funciona con ficheros office: https://github.com/openwall/john
 ```
 
 ## 6. Hydra
+
+Hydra es una herramienta que ayuda a realizar ataques de fuerza bruta contra sistemas expuestos.
+Por ejemplo, se pueden atacar equipos que tengan servidores VNC a partir de un listado de contraseñas que podemos tener en un fichero `passwords.txt`.
+
 ```bash
-   hydra -l <usuario> -P <ruta_del_diccionario> -s 443 -f -V -e ns -t 4 -w 30 https-get-form "https://cardiac-modified-stop-paraguay.trycloudflare.com/login:<campo_usuario>=^USER^&<campo_password>=^PASS^:F=error"
+   $  hydra -P passwords.txt -t 2 <DIRECCION_IP>:<PUERTO>
 ```
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+
+En este ejemplo, se indica con `-P` mayúscula un fichero de contraseñas y con`-t` el número de hilos (_threads_ en inglés).
+
+
+El ejercicio se puede hacer también para acceder a un servidor SFTP. Con la opción `-l` se puede indicar el nombre del usuario a testear (con `-L` podríamos especificar un archivo de texto con varios logins), `-t 4` indica cuatro hilos simultáneos, `-s` va seguido del puerto y despuès se indca `ssh://<HOST>`.
+
+```bash
+   $ hydra -l admin -P passwords.txt -t 4 -s 15882 ssh://5.tcp.eu.ngrok.io
+```
+
+También podríamos aplicar fuerza bruta sobre el formulario de una aplicación web:
+
+```bash
+    $ hydra -l <usuario> -P <ruta_del_diccionario> -s 443 -f -V -e ns -t 4 -w 30 https-get-form "<DIRECCION_URL_DE_LOGIN>:<campo_usuario>=^USER^&<campo_password>=^PASS^:F=error"
+```
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
